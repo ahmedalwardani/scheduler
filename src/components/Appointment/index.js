@@ -4,8 +4,7 @@ import Show from "components/Appointment/Show";
 import Empty from "components/Appointment/Empty";
 import Form from "components/Appointment/Form";
 import Error from "components/Appointment/Error";
-import Saving from "components/Appointment/Saving";
-import Deleting from "components/Appointment/Deleting";
+import Status from "components/Appointment/Status";
 import useVisualMode from "../../hooks/useVisualMode";
 import Confirm from "./Confirm";
 
@@ -75,8 +74,8 @@ export default function Appointment(props) {
         />
       )}
 
-      {mode === SAVING && <Saving />}
-      {mode === DELETING && <Deleting />}
+      {mode === SAVING && <Status message="Saving" />}
+      {mode === DELETING && <Status message="Deleting" />}
       {mode === ERROR_DELETE && (
         <Error message="Could not cancel appointment" onClose={() => back()} />
       )}
