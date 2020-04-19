@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import lodash from "lodash";
 
 export default function useApplicationData() {
   const [state, setState] = useState({
@@ -23,9 +24,20 @@ export default function useApplicationData() {
     };
 
     return axios.put(`/api/appointments/${id}`, { interview }).then(() => {
+      const daysToLoop = lodash.cloneDeep(state.days);
+
+      const dayOfAppointment = state.day;
+      const currentInterview = state.appointments[id].interview;
+
+      for (const day in daysToLoop) {
+        if (daysToLoop[day].name === dayOfAppointment && !currentInterview) {
+          daysToLoop[day].spots -= 1;
+        }
+      }
       setState({
         ...state,
-        appointments: appointmentsToEdit
+        appointments: appointmentsToEdit,
+        days: daysToLoop
       });
     });
   }
@@ -42,9 +54,18 @@ export default function useApplicationData() {
     };
 
     return axios.delete(`/api/appointments/${id}`).then(() => {
+      const daysToLoop = lodash.cloneDeep(state.days);
+
+      const dayOfAppointment = state.day;
+      for (const day in daysToLoop) {
+        if (daysToLoop[day].name === dayOfAppointment) {
+          daysToLoop[day].spots += 1;
+        }
+      }
       setState({
         ...state,
-        appointments: appointmentsToEdit
+        appointments: appointmentsToEdit,
+        days: daysToLoop
       });
     });
   }
