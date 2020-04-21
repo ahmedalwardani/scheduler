@@ -29,11 +29,14 @@ export default function useApplicationData() {
       const dayOfAppointment = state.day;
       const currentInterview = state.appointments[id].interview;
 
+      /* eslint-disable */
       for (const day in daysToLoop) {
         if (daysToLoop[day].name === dayOfAppointment && !currentInterview) {
           daysToLoop[day].spots -= 1;
         }
       }
+      /* eslint-enable */
+
       setState({
         ...state,
         appointments: appointmentsToEdit,
@@ -57,11 +60,14 @@ export default function useApplicationData() {
       const daysToLoop = lodash.cloneDeep(state.days);
 
       const dayOfAppointment = state.day;
+      /* eslint-disable */
+
       for (const day in daysToLoop) {
         if (daysToLoop[day].name === dayOfAppointment) {
           daysToLoop[day].spots += 1;
         }
       }
+      /* eslint-enable */
       setState({
         ...state,
         appointments: appointmentsToEdit,

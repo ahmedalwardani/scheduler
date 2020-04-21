@@ -15,7 +15,7 @@ import DayList from "./DayList";
 
 import "./Application.scss";
 
-axios.defaults.baseURL = "http://localhost:8001";
+axios.defaults.baseURL = "http://localhost:8080";
 
 export default function Application(props) {
   const {
