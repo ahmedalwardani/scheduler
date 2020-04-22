@@ -1,3 +1,4 @@
+// Get all appointments for a particular day
 export function getAppointmentsForDay(state, day) {
   if (state.days.length === 0) {
     return [];
@@ -22,6 +23,7 @@ export function getAppointmentsForDay(state, day) {
   return dayAppointmentsArray;
 }
 
+// Get a particulat interview
 export function getInterview(state, interview) {
   if (!interview) {
     return null;
@@ -32,6 +34,7 @@ export function getInterview(state, interview) {
   };
 }
 
+// Get all available interviewers for a particular day
 export function getInterviewersForDay(state, day) {
   if (state.days.length === 0) {
     return [];

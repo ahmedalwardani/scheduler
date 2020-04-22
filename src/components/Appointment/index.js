@@ -10,6 +10,7 @@ import Confirm from "./Confirm";
 
 import "./styles.scss";
 
+// Define different views for app
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
@@ -21,10 +22,12 @@ const ERROR_SAVE = "ERROR_SAVE";
 const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment(props) {
+  // Update mode viewed depending on whether an interview exists or not
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
 
+  // Save new interview or update existing interview
   function save(name, interviewer) {
     const interview = {
       student: name,
@@ -37,6 +40,7 @@ export default function Appointment(props) {
       .catch(() => transition(ERROR_SAVE, true));
   }
 
+  // Delete an interview
   function deleteInterview() {
     transition(DELETING, true);
     props
@@ -46,6 +50,7 @@ export default function Appointment(props) {
   }
 
   return (
+    // Toggle between different views based on current mode(defined on top)
     <article data-testid="appointment" className="appointment">
       <Header time={props.time} />
       {mode === CREATE && (

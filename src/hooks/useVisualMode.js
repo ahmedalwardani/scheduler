@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 export default function useVisualMode(initial) {
+  // Manage state for modes (show, empty, etc...) and history of modes (modes stored in history array)
   const [mode, setMode] = useState(initial);
   const [history, setHistory] = useState([initial]);
 

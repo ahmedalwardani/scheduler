@@ -11,13 +11,12 @@ import {
 import useApplicationData from "../hooks/useApplicationData";
 import DayList from "./DayList";
 
-// helpers
-
 import "./Application.scss";
 
 axios.defaults.baseURL = "http://localhost:8001";
 
 export default function Application(props) {
+  // State(imported from useApplicationData())
   const {
     state,
     setDay,
@@ -25,7 +24,10 @@ export default function Application(props) {
     cancelInterview
   } = useApplicationData();
 
+  // Define interviewers
   const interviewers = getInterviewersForDay(state, state.day);
+
+  // Defint apointments
   const appointments = getAppointmentsForDay(
     state,
     state.day

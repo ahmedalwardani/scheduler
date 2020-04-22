@@ -1,3 +1,4 @@
+// Mock data for simulating Axios requests in Jest tests
 const fixtures = {
   days: [
     {
@@ -55,6 +56,8 @@ const fixtures = {
 
 export default {
   defaults: { baseURL: "" },
+
+  // Simulate Axios get requests
   get: jest.fn(url => {
     if (url === "/api/days") {
       return Promise.resolve({
@@ -81,12 +84,15 @@ export default {
     }
   }),
 
+  // Simulate Axios put requests
   put: jest.fn(() =>
     Promise.resolve({
       status: 204,
       statusText: "No Content"
     })
   ),
+
+  // Simulate Axios delete requests
   delete: jest.fn(() =>
     Promise.resolve({
       status: 204,

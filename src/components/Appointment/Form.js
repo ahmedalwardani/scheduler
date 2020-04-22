@@ -3,20 +3,24 @@ import InterviewerList from "components/InterviewerList";
 import Button from "components/Button";
 
 export default function Form(props) {
+  // Set states for interviewer, student name, and error
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
   const [name, setName] = useState(props.name || "");
   const [error, setError] = useState("");
 
+  // Clear name input and set interviewer to null when user clicks on "cancel" to cancel scheduling an interview
   const resetState = () => {
     setInterviewer(null);
     setName("");
   };
 
+  // Reset state upon interview canceling
   const cancel = () => {
     resetState();
     props.onCancel();
   };
 
+  // Ensure user enters a name to schedule an interview
   function validate() {
     if (name === "") {
       setError("Student name cannot be blank");
@@ -38,9 +42,6 @@ export default function Form(props) {
             placeholder="Enter Student Name"
             onChange={event => setName(event.target.value)}
             data-testid="student-name-input"
-            /*
-          This must be a controlled component
-        */
           />
         </form>
         <section className="appointment__validation">{error}</section>

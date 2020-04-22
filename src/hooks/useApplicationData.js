@@ -3,6 +3,7 @@ import axios from "axios";
 import lodash from "lodash";
 
 export default function useApplicationData() {
+  // State defined here and exported to Application.js
   const [state, setState] = useState({
     day: "Monday",
     days: [],
@@ -10,8 +11,10 @@ export default function useApplicationData() {
     interviewers: {}
   });
 
+  // Select day to be current day(selecte by user in UI)
   const setDay = day => setState({ ...state, day });
 
+  // Book a new appointment for an interview
   function bookInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
@@ -24,6 +27,7 @@ export default function useApplicationData() {
     };
 
     return axios.put(`/api/appointments/${id}`, { interview }).then(() => {
+      // Axios put request to add interivew and reduce number of available spots by 1 for a given day
       const daysToLoop = lodash.cloneDeep(state.days);
 
       const dayOfAppointment = state.day;
@@ -37,6 +41,7 @@ export default function useApplicationData() {
       }
       /* eslint-enable */
 
+      // Set new state after booking appointment
       setState({
         ...state,
         appointments: appointmentsToEdit,
@@ -45,6 +50,7 @@ export default function useApplicationData() {
     });
   }
 
+  // Cancel previously booked interview
   function cancelInterview(id) {
     const appointment = {
       ...state.appointments[id],
@@ -56,6 +62,7 @@ export default function useApplicationData() {
       [id]: appointment
     };
 
+    // Axios delete request to delete interivew and increase number of available spots by 1 for a given day
     return axios.delete(`/api/appointments/${id}`).then(() => {
       const daysToLoop = lodash.cloneDeep(state.days);
 
@@ -68,6 +75,8 @@ export default function useApplicationData() {
         }
       }
       /* eslint-enable */
+
+      // Set new state after deleting appointment
       setState({
         ...state,
         appointments: appointmentsToEdit,
@@ -76,6 +85,7 @@ export default function useApplicationData() {
     });
   }
 
+  // Make axios calls to server to grab most recent data upon initial page reload
   useEffect(() => {
     Promise.all([
       axios.get("/api/days"),
